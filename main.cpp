@@ -28,7 +28,8 @@ protected:
    GLMmodel* objmodel_ptr;
    GLMmodel* objmodel_ptr1; //*** Para Textura: variable para objeto texturizado
    GLuint texid; //*** Para Textura: variable que almacena el identificador de textura
-
+   bool xI, xD, yU, yD, zF, zB;
+   float xP, yP, zP;
 
 public:
 	myWindow(){}
@@ -66,6 +67,31 @@ public:
 		glEnable(GL_TEXTURE_2D);
 	}
 
+	void moverX() {
+		if(xD){
+			xP += 0.01;
+		}else if(xI){
+			xP -= 0.01;
+		}
+	}
+
+	void moverY() {
+		if (yU) {
+			yP += 0.01;
+		}
+		else if (yD) {
+			yP -= 0.01;
+		}
+	}
+
+	void moverZ() {
+		if (zB) {
+			zP += 0.01;
+		}
+		else if (zF) {
+			zP -= 0.01;
+		}
+	}
 
 	virtual void OnRender(void)
 	{
@@ -74,27 +100,32 @@ public:
       //timer010 = 0.09; //for screenshot!
 
       glPushMatrix();
-	  glRotatef(timer010 * 360, 0.5, 1.0f, 0.1f);
-
-      if (shader) shader->begin();
+	  //glRotatef(timer010 * 360, 0.5, 1.0f, 0.1f);
+	  moverX();
+	  moverY();
+	  moverZ();
+	  glTranslatef(xP, yP, zP);
+	  glPushMatrix();
+		  if (shader) shader->begin();
 		  
-		  glPushMatrix();
-		  glTranslatef(-1.5f, 0.0f, 0.0f);
-		  glmDraw(objmodel_ptr, GLM_SMOOTH | GLM_MATERIAL);
-		  glPopMatrix();
-	      //glutSolidTeapot(1.0);
-      if (shader) shader->end();
+			  glPushMatrix();
+			  glTranslatef(-1.5f, 0.0f, 0.0f);
+			  glmDraw(objmodel_ptr, GLM_SMOOTH | GLM_MATERIAL);
+			  glPopMatrix();
+			  //glutSolidTeapot(1.0);
+		  if (shader) shader->end();
 
-	  //*** Para Textura: llamado al shader para objetos texturizados
-	  if (shader1) shader1->begin();
+		  //*** Para Textura: llamado al shader para objetos texturizados
+		  if (shader1) shader1->begin();
 
-		  glPushMatrix();
-		  glTranslatef(1.5f, 0.0f, 0.0f);
-		  glBindTexture(GL_TEXTURE_2D, texid);
-		  glmDraw(objmodel_ptr1, GLM_SMOOTH | GLM_MATERIAL | GLM_TEXTURE);
-		  glPopMatrix();
-	  //glutSolidTeapot(1.0);
-	  if (shader1) shader1->end();
+			  glPushMatrix();
+			  glTranslatef(1.5f, 0.0f, 0.0f);
+			  glBindTexture(GL_TEXTURE_2D, texid);
+			  glmDraw(objmodel_ptr1, GLM_SMOOTH | GLM_MATERIAL | GLM_TEXTURE);
+			  glPopMatrix();
+		  //glutSolidTeapot(1.0);
+		  if (shader1) shader1->end();
+		 glPopMatrix();
 
 
       glutSwapBuffers();
@@ -114,6 +145,16 @@ public:
 		glClearColor(0.5f, 0.5f, 1.0f, 0.0f);
 		glShadeModel(GL_SMOOTH);
 		glEnable(GL_DEPTH_TEST);
+
+		xI = false;
+		xD = false;
+		xP = 0;
+		yU = false;
+		yD = false;
+		yP = 0;
+		zF = false;
+		zB = false;
+		zP = 0;
 
 		shader = SM.loadfromFile("vertexshader.txt","fragmentshader.txt"); // load (and compile, link) from file
 		if (shader==0) 
@@ -141,7 +182,7 @@ public:
 
 	  if (!objmodel_ptr)
 	  {
-		  objmodel_ptr = glmReadOBJ("./Mallas/bunny.obj");
+		  objmodel_ptr = glmReadOBJ("./Mallas/cajas.obj");
 		  if (!objmodel_ptr)
 			  exit(0);
 
@@ -193,16 +234,57 @@ public:
 	virtual void OnMouseUp(int button, int x, int y) {}
 	virtual void OnMouseWheel(int nWheelNumber, int nDirection, int x, int y){}
 
-	virtual void OnKeyDown(int nKey, char cAscii)
-	{       
-		if (cAscii == 27) // 0x1b = ESC
-		{
-			this->Close(); // Close Window!
-		} 
+	virtual void OnKeyDown(int nKey, char cAscii){   
+		switch(cAscii){
+			case 27:
+				this->Close();
+				break;
+			case 'a':
+				xI = true;
+				break;
+			case 'd':
+				xD = true;
+				break;
+			case 'w':
+				zB = true;
+				break;
+			case 's':
+				zF = true;
+				break;
+			case 'e':
+				yD = true;
+				break;
+			case 'q':
+				yU = true;
+				break;
+			default:
+				break;
+		}
 	};
 
-	virtual void OnKeyUp(int nKey, char cAscii)
-	{
+	virtual void OnKeyUp(int nKey, char cAscii){
+		switch(cAscii){
+			case 'a':
+				xI = false;
+				break;
+			case 'd':
+				xD = false;
+				break;
+			case 'w':
+				zB = false;
+				break;
+			case 's':
+				zF = false;
+				break;
+			case 'e':
+				yD = false;
+				break;
+			case 'q':
+				yU = false;
+				break;
+			default:
+				break;
+		}
       if (cAscii == 's')      // s: Shader
          shader->enable();
       else if (cAscii == 'f') // f: Fixed Function
