@@ -109,7 +109,7 @@ public:
 		  if (shader) shader->begin();
 		  
 			  glPushMatrix();
-			  glTranslatef(-1.5f, 0.0f, 0.0f);
+			  glTranslatef(-2.0f, 0.0f, 0.0f);
 			  glmDraw(objmodel_ptr, GLM_SMOOTH | GLM_MATERIAL);
 			  glPopMatrix();
 			  //glutSolidTeapot(1.0);
