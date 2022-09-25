@@ -1,0 +1,26 @@
+# Blender MTL File: 'bote.blend'
+# Material Count: 2
+
+newmtl BoatMat_boattex.jpg.001
+Ns 96.078421
+Ka 1.000000 1.000000 1.000000
+Kd 0.640000 0.640000 0.640000
+Ks 0.096262 0.096262 0.096262
+Ke 0.000000 0.000000 0.000000
+Ni 1.000000
+d 1.000000
+illum 2
+map_Bump Foundation\\Models\\barca\\boat_009.blend\\boattexnm.jpg
+map_Kd Foundation\\Models\\barca\\boat_009.blend\\boattex.jpg
+
+newmtl OarMat_boattex.jpg.001
+Ns 96.078421
+Ka 1.000000 1.000000 1.000000
+Kd 0.556797 0.556797 0.556797
+Ks 0.084746 0.084746 0.084746
+Ke 0.000000 0.000000 0.000000
+Ni 1.000000
+d 1.000000
+illum 2
+map_Bump Foundation\\Models\\barca\\boat_009.blend\\boattexnm.jpg
+map_Kd Foundation\\Models\\barca\\boat_009.blend\\boattex.jpg

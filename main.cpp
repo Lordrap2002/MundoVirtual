@@ -10,6 +10,10 @@
 #include "glsl.h"
 #include <time.h>
 #include "glm.h"
+#include "puma.h"
+#include "Objeto.h"
+#include "Planta.h"
+#include <string>
 #include <FreeImage.h> //*** Para Textura: Incluir librería
 
 //-----------------------------------------------------------------------------
@@ -25,8 +29,11 @@ protected:
    clock_t time0,time1;
    float timer010;  // timer counting 0->1->0
    bool bUp;        // flag if counting up or down.
-   GLMmodel* objmodel_ptr;
-   GLMmodel* objmodel_ptr1; //*** Para Textura: variable para objeto texturizado
+   GLMmodel* cajas;
+   Puma* MiPuma;
+   Objeto* MiObjeto;
+   Planta* MiPlanta;
+   GLMmodel* llama; //*** Para Textura: variable para objeto texturizado
    GLuint texid; //*** Para Textura: variable que almacena el identificador de textura
    bool xI, xD, yU, yD, zF, zB;
    float xP, yP, zP;
@@ -52,8 +59,8 @@ public:
 
 		// Loading JPG file
 		FIBITMAP* bitmap = FreeImage_Load(
-			FreeImage_GetFileType("./Mallas/bola.jpg", 0),
-			"./Mallas/bola.jpg");  //*** Para Textura: esta es la ruta en donde se encuentra la textura
+			FreeImage_GetFileType("./Mallas/llamita.jpg", 0),
+			"./Mallas/llamita.jpg");  //*** Para Textura: esta es la ruta en donde se encuentra la textura
 
 		FIBITMAP* pImage = FreeImage_ConvertTo32Bits(bitmap);
 		int nWidth = FreeImage_GetWidth(pImage);
@@ -107,21 +114,35 @@ public:
 	  glTranslatef(xP, yP, zP);
 	  glPushMatrix();
 		  if (shader) shader->begin();
-		  
+
+		  MiPuma->DibujarPuma(15, 0, 1.5,"./Mallas/pumita.obj");
+		  MiPlanta->DibujarPlanta(-5, 0, 2, "./Mallas/palma1.obj");
+		  MiPlanta->DibujarPlanta(-7, 0, 2, "./Mallas/palma2.obj");
+		  MiObjeto->DibujarObjeto(15, 0, 1.5, "./Mallas/jaulita.obj");
+		  MiObjeto->DibujarObjeto(-10, 0, 0, "./Mallas/bote.obj");
+		  MiObjeto->DibujarObjeto(10, 0, -2, "./Mallas/cajas.obj");
+		  MiObjeto->DibujarObjeto(0, -2, 0, "./Mallas/ObjPropio.obj");
+		  /*
 			  glPushMatrix();
 			  glTranslatef(-2.0f, 0.0f, 0.0f);
-			  glmDraw(objmodel_ptr, GLM_SMOOTH | GLM_MATERIAL);
+			  glmDraw(cajas, GLM_SMOOTH | GLM_MATERIAL);
 			  glPopMatrix();
 			  //glutSolidTeapot(1.0);
+
+			  glPushMatrix();
+			  glTranslatef(4.0f, 0.0f, 0.0f);
+			  glmDraw(puma, GLM_SMOOTH | GLM_MATERIAL);
+			  glPopMatrix();
+		  */
 		  if (shader) shader->end();
 
 		  //*** Para Textura: llamado al shader para objetos texturizados
 		  if (shader1) shader1->begin();
 
 			  glPushMatrix();
-			  glTranslatef(1.5f, 0.0f, 0.0f);
+			  glTranslatef(7.0f, 0.0f, 15.0f);
 			  glBindTexture(GL_TEXTURE_2D, texid);
-			  glmDraw(objmodel_ptr1, GLM_SMOOTH | GLM_MATERIAL | GLM_TEXTURE);
+			  glmDraw(llama, GLM_SMOOTH | GLM_MATERIAL | GLM_TEXTURE);
 			  glPopMatrix();
 		  //glutSolidTeapot(1.0);
 		  if (shader1) shader1->end();
@@ -178,32 +199,44 @@ public:
       bUp = true;
 
 	  //Abrir mallas
-	  objmodel_ptr = NULL;
+	  cajas = NULL;
 
-	  if (!objmodel_ptr)
+	  if (!cajas)
 	  {
-		  objmodel_ptr = glmReadOBJ("./Mallas/cajas.obj");
-		  if (!objmodel_ptr)
+		  cajas = glmReadOBJ("./Mallas/cajas.obj");
+		  if (!cajas)
 			  exit(0);
 
-		  glmUnitize(objmodel_ptr);
-		  glmFacetNormals(objmodel_ptr);
-		  glmVertexNormals(objmodel_ptr, 90.0);
+		  glmUnitize(cajas);
+		  glmFacetNormals(cajas);
+		  glmVertexNormals(cajas, 90.0);
 	  }
+	  /*
+	  puma = NULL;
 
-
-	  //*** Para Textura: abrir malla de objeto a texturizar
-	  objmodel_ptr1 = NULL;
-
-	  if (!objmodel_ptr1)
+	  if (!puma)
 	  {
-		  objmodel_ptr1 = glmReadOBJ("./Mallas/bola.obj");
-		  if (!objmodel_ptr1)
+		  puma = glmReadOBJ("./Mallas/puma.obj");
+		  if (!puma)
 			  exit(0);
 
-		  glmUnitize(objmodel_ptr1);
-		  glmFacetNormals(objmodel_ptr1);
-		  glmVertexNormals(objmodel_ptr1, 90.0);
+		  glmUnitize(puma);
+		  glmFacetNormals(puma);
+		  glmVertexNormals(puma, 90.0);
+	  }
+	  */
+	  //*** Para Textura: abrir malla de objeto a texturizar
+	  llama = NULL;
+
+	  if (!llama)
+	  {
+		  llama = glmReadOBJ("./Mallas/llamita.obj");
+		  if (!llama)
+			  exit(0);
+
+		  glmUnitize(llama);
+		  glmFacetNormals(llama);
+		  glmVertexNormals(llama, 90.0);
 	  }
  
 	  //*** Para Textura: abrir archivo de textura

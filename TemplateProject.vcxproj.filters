@@ -28,6 +28,21 @@
     <Filter Include="cwc\source">
       <UniqueIdentifier>{e55042e6-effb-4fb3-a1fd-49eaaadf727e}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ClasesPropias">
+      <UniqueIdentifier>{629f9a97-fb05-4c09-bb78-069262fc0dbb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ClasesPropias\Artificial">
+      <UniqueIdentifier>{512b72e5-3df7-47ea-82d0-8578762bd0c7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ClasesPropias\Natural">
+      <UniqueIdentifier>{278968c8-985f-4a40-ad00-182881967cf6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ClasesPropias\Natural\Animal">
+      <UniqueIdentifier>{9ba71a4a-ed6b-47ce-bcb5-77b1a9098190}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ClasesPropias\Natural\Planta">
+      <UniqueIdentifier>{66b839a7-b997-4014-8d64-a399d8a66534}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="glew\include\Gl\glew.h">
@@ -70,6 +85,15 @@
       <Filter>cwc\include</Filter>
     </ClInclude>
     <ClInclude Include="glm.h" />
+    <ClInclude Include="puma.h">
+      <Filter>ClasesPropias\Natural\Animal</Filter>
+    </ClInclude>
+    <ClInclude Include="Objeto.h">
+      <Filter>ClasesPropias\Artificial</Filter>
+    </ClInclude>
+    <ClInclude Include="Planta.h">
+      <Filter>ClasesPropias\Natural\Planta</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="glew\source\glew.c">
@@ -155,6 +179,15 @@
     </ClCompile>
     <ClCompile Include="main.cpp" />
     <ClCompile Include="glm.cpp" />
+    <ClCompile Include="puma.cpp">
+      <Filter>ClasesPropias\Natural\Animal</Filter>
+    </ClCompile>
+    <ClCompile Include="Objeto.cpp">
+      <Filter>ClasesPropias\Artificial</Filter>
+    </ClCompile>
+    <ClCompile Include="Planta.cpp">
+      <Filter>ClasesPropias\Natural\Planta</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="freeglut\source\freeglutdll.def">
