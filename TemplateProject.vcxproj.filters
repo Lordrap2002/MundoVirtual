@@ -193,6 +193,7 @@
     <None Include="freeglut\source\freeglutdll.def">
       <Filter>freeglut\source</Filter>
     </None>
+    <None Include="ClassDiagram.cd" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="fragmentshader.txt" />

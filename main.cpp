@@ -115,13 +115,18 @@ public:
 	  glPushMatrix();
 		  if (shader) shader->begin();
 
-		  MiPuma->DibujarPuma(15, 0, 1.5,"./Mallas/pumita.obj");
-		  MiPlanta->DibujarPlanta(-5, 0, 2, "./Mallas/palma1.obj");
-		  MiPlanta->DibujarPlanta(-7, 0, 2, "./Mallas/palma2.obj");
-		  MiObjeto->DibujarObjeto(15, 0, 1.5, "./Mallas/jaulita.obj");
-		  MiObjeto->DibujarObjeto(-10, 0, 0, "./Mallas/bote.obj");
-		  MiObjeto->DibujarObjeto(10, 0, -2, "./Mallas/cajas.obj");
-		  MiObjeto->DibujarObjeto(0, -2, 0, "./Mallas/ObjPropio.obj");
+		  //Camara
+		  glTranslatef(-2, -1, -20);
+		  glPushMatrix();
+
+		  MiPuma->DibujarPuma(5.0, -0.2, 16.0,"./Mallas/pumita.obj");
+		  MiPlanta->DibujarPlanta(-1.0, 0.0, 13.0, "./Mallas/palma1.obj");
+		  MiPlanta->DibujarPlanta(-1.0, 0, 16.0, "./Mallas/palma2.obj");
+		  MiObjeto->DibujarObjeto(5.0, 0, 16.0, "./Mallas/jaulita.obj");
+		  MiObjeto->DibujarObjeto(-3.0, -1.0, 16.0, "./Mallas/bote.obj");
+		  MiObjeto->DibujarObjeto(3.0, 0, 19.0, "./Mallas/cajas.obj");
+		  MiObjeto->DibujarObjeto(3.0f, -1.0f, 12.0f, "./Mallas/ObjPropio.obj");
+
 		  /*
 			  glPushMatrix();
 			  glTranslatef(-2.0f, 0.0f, 0.0f);
@@ -140,7 +145,8 @@ public:
 		  if (shader1) shader1->begin();
 
 			  glPushMatrix();
-			  glTranslatef(7.0f, 0.0f, 15.0f);
+			  glTranslatef(3.0f, -0.1f, 12.0f);
+			  glRotatef(-30, 0, 90, 0);
 			  glBindTexture(GL_TEXTURE_2D, texid);
 			  glmDraw(llama, GLM_SMOOTH | GLM_MATERIAL | GLM_TEXTURE);
 			  glPopMatrix();
