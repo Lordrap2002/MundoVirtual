@@ -35,8 +35,8 @@ protected:
    Planta* MiPlanta;
    GLMmodel* llama; //*** Para Textura: variable para objeto texturizado
    GLuint texid; //*** Para Textura: variable que almacena el identificador de textura
-   bool xI, xD, yU, yD, zF, zB;
-   float xP, yP, zP;
+   bool xI, xD, yU, yD, zF, zB, boteD, boteI, boteF, boteB;
+   float xP, yP, zP, boteX, boteZ;
 
 public:
 	myWindow(){}
@@ -76,27 +76,45 @@ public:
 
 	void moverX() {
 		if(xD){
-			xP += 0.01;
+			xP -= 0.1;
 		}else if(xI){
-			xP -= 0.01;
+			xP += 0.1;
 		}
 	}
 
 	void moverY() {
 		if (yU) {
-			yP += 0.01;
+			yP += 0.1;
 		}
 		else if (yD) {
-			yP -= 0.01;
+			yP -= 0.1;
 		}
 	}
 
 	void moverZ() {
 		if (zB) {
-			zP += 0.01;
+			zP += 0.1;
 		}
 		else if (zF) {
-			zP -= 0.01;
+			zP -= 0.1;
+		}
+	}
+
+	void moverBoteX() {
+		if (boteD) {
+			boteX -= 0.1;
+		}
+		else if (boteI) {
+			boteX += 0.1;
+		}
+	}
+
+	void moverBoteZ() {
+		if (boteB) {
+			boteZ += 0.1;
+		}
+		else if (boteF) {
+			boteZ -= 0.1;
 		}
 	}
 
@@ -108,40 +126,29 @@ public:
 
       glPushMatrix();
 	  //glRotatef(timer010 * 360, 0.5, 1.0f, 0.1f);
+	  //Mover la camara con las teclas q, w, e, a, s, d.
 	  moverX();
 	  moverY();
 	  moverZ();
+	  moverBoteX();
+	  moverBoteZ();
 	  glTranslatef(xP, yP, zP);
 	  glPushMatrix();
 		  if (shader) shader->begin();
-
-		  //Camara
-		  glTranslatef(-2, -1, -20);
-		  glPushMatrix();
-
-		  MiPuma->DibujarPuma(5.0, -0.2, 16.0,"./Mallas/pumita.obj");
-		  MiPlanta->DibujarPlanta(-1.0, 0.0, 13.0, "./Mallas/palma1.obj");
-		  MiPlanta->DibujarPlanta(-1.0, 0, 16.0, "./Mallas/palma2.obj");
-		  MiObjeto->DibujarObjeto(5.0, 0, 16.0, "./Mallas/jaulita.obj");
-		  MiObjeto->DibujarObjeto(-3.0, -1.0, 16.0, "./Mallas/bote.obj");
-		  MiObjeto->DibujarObjeto(3.0, 0, 19.0, "./Mallas/cajas.obj");
-		  MiObjeto->DibujarObjeto(3.0f, -1.0f, 12.0f, "./Mallas/ObjPropio.obj");
-
-		  /*
+			  glTranslatef(-2, -1, -20);
 			  glPushMatrix();
-			  glTranslatef(-2.0f, 0.0f, 0.0f);
-			  glmDraw(cajas, GLM_SMOOTH | GLM_MATERIAL);
+				  MiPuma->DibujarPuma(5.0, -0.2, 16.0,"./Mallas/pumita.obj");
+				  MiPlanta->DibujarPlanta(-1.0, 0.0, 13.0, "./Mallas/palma1.obj");
+				  MiPlanta->DibujarPlanta(-1.0, 0, 16.0, "./Mallas/palma2.obj");
+				  MiObjeto->DibujarObjeto(5.0, 0, 16.0, "./Mallas/jaulita.obj");
+				  MiObjeto->DibujarObjeto(( -3.0 + boteX), -1.0, (16.0 + boteZ), "./Mallas/bote.obj");
+				  MiObjeto->DibujarObjeto(3.0, 0, 19.0, "./Mallas/cajas.obj");
+				  MiObjeto->DibujarObjeto(3.0f, -1.0f, 12.0f, "./Mallas/ObjPropio.obj");
 			  glPopMatrix();
-			  //glutSolidTeapot(1.0);
-
-			  glPushMatrix();
-			  glTranslatef(4.0f, 0.0f, 0.0f);
-			  glmDraw(puma, GLM_SMOOTH | GLM_MATERIAL);
-			  glPopMatrix();
-		  */
 		  if (shader) shader->end();
+		  
 
-		  //*** Para Textura: llamado al shader para objetos texturizados
+		  //* Para Textura: llamado al shader para objetos texturizados
 		  if (shader1) shader1->begin();
 
 			  glPushMatrix();
@@ -150,7 +157,6 @@ public:
 			  glBindTexture(GL_TEXTURE_2D, texid);
 			  glmDraw(llama, GLM_SMOOTH | GLM_MATERIAL | GLM_TEXTURE);
 			  glPopMatrix();
-		  //glutSolidTeapot(1.0);
 		  if (shader1) shader1->end();
 		 glPopMatrix();
 
@@ -182,6 +188,13 @@ public:
 		zF = false;
 		zB = false;
 		zP = 0;
+
+		boteD = false;
+		boteI = false;
+		boteX = 0;
+		boteF = false;
+		boteB = false;
+		boteZ = 0;
 
 		shader = SM.loadfromFile("vertexshader.txt","fragmentshader.txt"); // load (and compile, link) from file
 		if (shader==0) 
@@ -296,6 +309,18 @@ public:
 			case 'q':
 				yU = true;
 				break;
+			case 'l':
+				boteI = true;
+				break;
+			case 'i':
+				boteF = true;
+				break;
+			case 'j':
+				boteD = true;
+				break;
+			case 'k':
+				boteB = true;
+				break;
 			default:
 				break;
 		}
@@ -320,6 +345,18 @@ public:
 				break;
 			case 'q':
 				yU = false;
+				break;
+			case 'l':
+				boteI = false;
+				break;
+			case 'i':
+				boteF = false;
+				break;
+			case 'j':
+				boteD = false;
+				break;
+			case 'k':
+				boteB = false;
 				break;
 			default:
 				break;
