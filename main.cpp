@@ -140,6 +140,10 @@ public:
 				  MiPuma->DibujarPuma(5.0, -0.2, 16.0,"./Mallas/pumita.obj");
 				  MiPlanta->DibujarPlanta(-1.0, 0.0, 13.0, "./Mallas/palma1.obj");
 				  MiPlanta->DibujarPlanta(-1.0, 0, 16.0, "./Mallas/palma2.obj");
+				  MiPlanta->DibujarPlanta(-1.0, 0.0, 5.0, "./Mallas/palma1.obj");
+				  MiPlanta->DibujarPlanta(2.0, 0, 5.0, "./Mallas/palma2.obj");
+				  MiPlanta->DibujarPlanta(6.0, 0.0, 4.0, "./Mallas/palma1.obj");
+				  MiPlanta->DibujarPlanta(7.0, 0, 10.0, "./Mallas/palma2.obj");
 				  MiObjeto->DibujarObjeto(5.0, 0, 16.0, "./Mallas/jaulita.obj");
 				  MiObjeto->DibujarObjeto(( -3.0 + boteX), -1.0, (16.0 + boteZ), "./Mallas/bote.obj");
 				  MiObjeto->DibujarObjeto(3.0, 0, 19.0, "./Mallas/cajas.obj");
